@@ -40,3 +40,16 @@ function buildNested(array $menus, int $parent=0, &$result = [])
 }
 
 //$result[$key]['children'][$key] =
+
+function getMenuSelect(array $menus, int $parent=0, $seps='')
+{
+    if (!empty($menus)) {
+        foreach ($menus as $key => $menu) {
+            if ($menu['parent'] == $parent) {
+                echo '<option value="'.$menu['id'].'">'.$seps.$menu['title'].'</option>';
+                getMenuSelect($menus, $menu['id'], $seps.' |- ');
+                unset($menus[$key]);
+            }
+        }
+    }
+}

@@ -88,6 +88,10 @@ $menus = [
 ];
 
 $nested = buildNested($menus);
-echo '<pre>';
-print_r($nested);
-echo '</pre>';
+// echo '<pre>';
+// print_r($nested);
+// echo '</pre>';
+
+echo '<select>';
+getMenuSelect($menus);
+echo '</select>';
