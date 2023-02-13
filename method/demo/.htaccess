@@ -1,0 +1,2 @@
+RewriteEngine On
+RewriteRule ^(.+)$ index.php?module=$1 [L,QSA]
