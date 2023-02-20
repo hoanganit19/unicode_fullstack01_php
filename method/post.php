@@ -1,9 +1,7 @@
 <?php
-
+session_start();
+require_once 'functions.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    echo '<pre>';
-    print_r($_POST);
-    echo '</pre>';
     $errors = []; //mảng lỗi
 
     //Kiểm tra các lỗi
@@ -22,8 +20,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $errors['password']['min'] = 'Mật khẩu phải từ 8 ký tự';
         }
     }
+
+    setSession('errors', $errors);
+    setSession('msg', 'Vui lòng kiểm tra thông tin');
+    setSession('old', $_POST);
+
+    reload();
 }
 
+$errors = getFlashData('errors');
+$msg = getFlashData('msg');
+$old = getFlashData('old');
 /*
 Bài tập: Xây dựng Validate form
 - Email: bắt buộc phải nhập, định dạng email: https://www.w3schools.com/php/filter_validate_email.asp
@@ -31,16 +38,16 @@ Bài tập: Xây dựng Validate form
 */
 ?>
 <form action="" method="post">
+    <?php echo !empty($msg) ? $msg : false; ?>
     <div>
-        <input type="text" name="email" placeholder="Email..." value="<?php echo $_POST['email'] ?? false; ?>" /> <br />
+        <input type="text" name="email" placeholder="Email..." value="<?php echo $old['email'] ?? false; ?>" /> <br />
         <?php
         echo (!empty($errors['email'])) ? '<span style="color: red">'.reset($errors['email']).'</span>' : false;
 ?>
 
     </div>
     <div>
-        <input type="text" name="password" placeholder="Password..."
-            value="<?php echo $_POST['password'] ?? false; ?>" />
+        <input type="text" name="password" placeholder="Password..." value="<?php echo $old['password'] ?? false; ?>" />
         <br />
         <?php
         echo (!empty($errors['password'])) ? '<span style="color: red">'.reset($errors['password']).'</span>' : false;
