@@ -66,3 +66,42 @@ categories_posts
 - id
 - post_id
 - category_id
+
+Thực hành: Tạo 1 số table như sau:
+
+Table posts:
+
+- id: int, primary key, auto_increment
+- title: varchar(255)
+- content: text
+- excerpt: text
+- status: tinyint(1) default 0;
+- created_at: datetime, default current_timestamp
+- updated_at: datetime, default current_timestamp
+
+Table categories:
+
+- id: int, primary key, auto_increment
+- name: varchar(255)
+- created_at: datetime, default current_timestamp
+- updated_at: datetime, default current_timestamp
+
+Table categories_posts:
+
+- id: int, primary key, auto_increment
+- post_id: int, foreign key posts(id)
+- category_id: int, foreign key categories(id);
+- created_at: datetime, default current_timestamp
+
+Table comments:
+
+- id: int, primary key, auto_increment
+- user_id: int, foreign key users(id)
+- subject: varchar(255)
+- message: text
+- status: tinyint(1) default 0
+- post_id: int, foreign key posts(id)
+- category_id: int, foreign key categories(id);
+- created_at: datetime, default current_timestamp
+
+=> Insert dữ liệu vào tất cả các bảng
