@@ -105,3 +105,58 @@ Table comments:
 - created_at: datetime, default current_timestamp
 
 => Insert dữ liệu vào tất cả các bảng
+
+Bài tập filters
+
+Table users có các trường
+
+- id
+- name
+- email
+- phone
+- status
+- created_at
+- updated_at
+
+=> Yêu cầu: Viết câu lệnh sql tìm kiếm theo status và keyword (tìm từ khóa ở các trường: name, email, phone)
+
+Ví dụ thực tế của Left Join
+
+- Hiển thị danh sách các bài viết và số lượng comment của từng bài (left join)
+- Hiển thị danh sách người dùng (Có tỉnh thành phố của người dùng)
+
+Table users
+
+- id
+- name
+- email
+- provinceId
+- districtId
+- wardId
+
+Table province
+
+- id
+- name
+
+Table district
+
+- id
+- name
+- provinceId
+
+Table ward
+
+- id
+- name
+- districtId
+
+HÀM
+
+- SUM()
+- COUNT()
+- MAX()
+- MIN()
+- AVG()
+
+Group By, Having
