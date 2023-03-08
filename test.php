@@ -1,8 +1,5 @@
 <?php
 
-$str = "TKG:~2.300d";
-preg_match('/.*?([\d\.]+).*/', $str, $matches);
-print_r($matches);
-
-$a = 'a';
-var_dump($a);
+$file = fopen('./test.txt', 'w+');
+$check = is_resource($file);
+var_dump($check);

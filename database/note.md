@@ -158,5 +158,57 @@ HÀM
 - MAX()
 - MIN()
 - AVG()
+- DATE()
+- DAY()
+- MONTH()
+- YEAR()
+- NOW()
 
 Group By, Having
+
+Có 2 table
+
+- posts
+- comments
+
+=> Liên kết khóa ngoại
+=> Nhập liệu
+=> Truy vấn hiển thị danh sách các bài viết và thêm 1 cột comment_count
+
+Tạo tables
+
+posts
+
+- id
+- title
+- created_at
+- updated_at
+
+categories
+
+- id
+- name
+- created_at
+- updated_at
+
+posts_categories
+
+- id
+- post_id
+- category_id
+- created_at
+
+Dữ liệu mẫu
+
+Bài viết 1 thuộc 2 chuyện mục
+
+- Thời sự
+- Kinh doanh
+
+Bài tập: Xóa tất cả các bài viết thuộc chuyên mục "Thời sự" (id = 1)
+
+Ôn tập
+
+- Truy vấn Select
+- Join bảng, sub query
+- Tìm hiểu cách sử dụng phần mềm phpmyadmin (Hoặc phần mềm liên quan)
