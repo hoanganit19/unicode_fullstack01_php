@@ -16,9 +16,7 @@ if (class_exists('PDO')) {
 
         //var_dump($conn);
     } catch(Exception $e) {
-        echo 'Erorrs: '.$e->getMessage().'<br/>';
-        echo 'File: '.$e->getFile().'<br/>';
-        echo 'Line: '.$e->getLine().'<br/>';
+        require 'errors.php';
         die();
     }
 } else {
