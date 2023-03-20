@@ -90,3 +90,9 @@ function first($sql, $data)
     $statement = query($sql, $data, true);
     return $statement->fetch(PDO::FETCH_ASSOC);
 }
+
+function getRows($sql, $data)
+{
+    $statement = query($sql, $data, true);
+    return $statement->rowCount();
+}

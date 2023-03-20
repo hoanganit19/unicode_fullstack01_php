@@ -31,3 +31,11 @@ Kiểm tra password: password_verify($password, $hash)
 * false => Thông báo đăng nhập thất bại
 
 Lưu ý: nếu thông báo cụ thể => dễ bị tấn công qua hình thức: brute force attack
+
+# Xây dựng chức năng đăng ký
+
+- Tạo form: Password và Confirm Password
+- Validation Form: Unique email, Confirm Password
+- Lấy thông tin của form: name, email, password: Tạo hash
+- Insert vào Database
+- set session tự động login
