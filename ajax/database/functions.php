@@ -14,7 +14,6 @@ function query($sql, $data = [], $isStatement = false)
         //var_dump(debug_backtrace());
         require 'errors.php';
         die();
-        die();
     }
 }
 
@@ -79,20 +78,14 @@ function delete($table, $condition=null, $data = [])
     return $status;
 }
 
-function get($sql, $data)
+function get($sql, $data=[])
 {
     $statement = query($sql, $data, true);
     return $statement->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function first($sql, $data)
+function first($sql, $data=[])
 {
     $statement = query($sql, $data, true);
     return $statement->fetch(PDO::FETCH_ASSOC);
-}
-
-function getRows($sql, $data=[])
-{
-    $statement = query($sql, $data, true);
-    return $statement->rowCount();
 }

@@ -14,7 +14,6 @@ function query($sql, $data = [], $isStatement = false)
         //var_dump(debug_backtrace());
         require 'errors.php';
         die();
-        die();
     }
 }
 
