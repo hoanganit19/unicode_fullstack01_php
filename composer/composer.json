@@ -15,6 +15,6 @@
         "files": ["helpers/functions.php"]
     },
     "require": {
-        
+        "vlucas/phpdotenv": "^5.5"
     }
 }
