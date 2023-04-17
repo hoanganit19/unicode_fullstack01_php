@@ -1,8 +1,9 @@
 <?php
 
-use Core\Route;
+use Core\App;
 
 require_once '../vendor/autoload.php';
 
-$route = new Route();
-$route->execute();
+$app = new App();
+$app->setConst(__DIR__);
+$app->execute();

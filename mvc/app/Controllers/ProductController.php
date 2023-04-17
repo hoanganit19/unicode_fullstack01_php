@@ -32,4 +32,9 @@ class ProductController
     {
         return 'Sửa - '.$id.' - '.$slug;
     }
+
+    public function postEdit()
+    {
+
+    }
 }

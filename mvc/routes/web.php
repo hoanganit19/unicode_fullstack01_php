@@ -1,7 +1,8 @@
 <?php
 
-use Core\Route;
+use Core\View;
 
+use Core\Route;
 use App\Controllers\HomeController;
 use App\Controllers\ProductController;
 
@@ -22,8 +23,12 @@ Route::get('/bao-cao', [HomeController::class, 'report']);
 
 Route::get('/san-pham', [ProductController::class, 'index']);
 Route::get('/san-pham/them', [ProductController::class, 'add']);
-Route::get('/san-pham/sua/{id}/{slug}.html', [ProductController::class, 'edit']);
+Route::get('/san-pham/sua/{id}/{slug}', [ProductController::class, 'edit']);
 
 Route::get('/test/{id}', function ($id) {
     echo 'Test - '.$id;
+});
+
+Route::get('/flash-sales', function () {
+    View::render('home/flash-sales');
 });

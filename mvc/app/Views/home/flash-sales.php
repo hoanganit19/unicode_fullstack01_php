@@ -1,0 +1,1 @@
+<h1>Flash Sales</h1>

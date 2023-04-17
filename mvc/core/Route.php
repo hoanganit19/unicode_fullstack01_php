@@ -33,7 +33,7 @@ class Route
     public static function handlePath($path)
     {
         $path = preg_replace('/\{.+?\}+/', '(.+)', $path);
-        return $path;
+        return trim($path, '/');
     }
 
     public function execute()
@@ -96,6 +96,6 @@ class Route
             $path = $requestUri;
         }
 
-        return $path;
+        return trim($path, '/');
     }
 }
