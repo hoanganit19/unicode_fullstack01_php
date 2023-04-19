@@ -3,6 +3,7 @@
 namespace Core;
 
 use Core\Route;
+use Core\Request;
 
 class App
 {
@@ -10,7 +11,9 @@ class App
 
     public function execute()
     {
-        $this->route = new Route();
+        require_once '../core/helpers/url.php';
+
+        $this->route = new Route(new Request());
         $this->route->execute();
     }
 

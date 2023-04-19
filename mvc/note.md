@@ -34,3 +34,18 @@ home/index.php => View
 <h1>Nội dung </h1>
 
 @endsection
+
+## Xử lý định danh routes
+
+- Lấy tất cả các Path của config
+- Lưu vào 1 mảng
+
+## Helper
+
+- Helper Core => Có sẵn trong bộ core
+- Helper App => Hàm tự tạo đi theo dự án
+
+Index => Bootstrap => App => Request, Response => Route
+
+- Abtract class
+- Interface
