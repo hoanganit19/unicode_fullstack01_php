@@ -11,7 +11,7 @@ function redirect($path)
 {
     // $redirect = new Redirect();
     // return $redirect;
-    header("Loaction: $path");
+    header("Location: $path");
     exit;
 }
 

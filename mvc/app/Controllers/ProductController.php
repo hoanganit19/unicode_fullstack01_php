@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use Core\Route;
 use Core\Request;
+use Core\Session;
+use Core\Validator;
 use Core\Controller;
 
 class ProductController extends Controller
@@ -46,26 +48,62 @@ class ProductController extends Controller
 
     public function postAdd(Request $request)
     {
-        //Xử lý:
-        // - Lấy dữ liệu (Request)
+        $request->validate(
+            [
+                //tên trường => danh sách rules
+                'name' => 'required|min:4|max:15',
+                'email' => 'required|email',
+                'password' => 'required|min:6',
+                'confirm_password' => 'required|min:6|same:password'
+            ],
+            [
+                //tên rule => Nội dung thông báo
+                'required' => ':attribute không được để trống',
+                'min' => ':attribute phải từ :min ký tự',
+                'max' => ':attribute không được lớn hơn :max ký tự',
+                'same' => ':attribute không khớp với :same',
+                'email' => ':attribute không đúng định dạng email'
+            ],
+            [
+                'name' => 'Tên',
+                'email' => 'Email',
+                'password' => 'Mật khẩu',
+                'confirm_password' => 'Nhập lại mật khẩu'
+            ]
+        );
+        // $validator = Validator::make(
+        //     $request->all(),
+        // [
+        //     //tên trường => danh sách rules
+        //     'name' => 'required|min:4|max:15',
+        //     'email' => 'required|email',
+        //     'password' => 'required|min:6',
+        //     'confirm_password' => 'required|min:6|same:password'
+        // ],
+        //     [
+        //         //tên rule => Nội dung thông báo
+        //         'required' => ':attribute không được để trống',
+        //         'min' => ':attribute phải từ :min ký tự',
+        //         'max' => ':attribute không được lớn hơn :max ký tự',
+        //         'same' => ':attribute không khớp với :same',
+        //         'email' => ':attribute không đúng định dạng email'
+        //     ],
+        //     [
+        //         'name' => 'Tên',
+        //         'email' => 'Email',
+        //         'password' => 'Mật khẩu',
+        //         'confirm_password' => 'Nhập lại mật khẩu'
+        //     ]
+        // );
 
-        //$request = new Request() => Tạo 1 request mới (Không có dữ liệu)
-        //postAdd(Request $request) => Lấy request hiện tại
+        // if ($validator->passes()) {
+        //     echo 'thành công';
+        // } else {
+        //     echo 'thất bại';
+        //     redirect('/san-pham/them');
+        // }
 
-        if ($request->email) {
-            echo $request->email.'<br/>';
-        }
 
-        // $request->abc = '123';
-        // echo $request->abc;
-
-        // $request = new Request();
-        // echo '<pre>';
-        // print_r($request->all());
-        // echo '</pre>';
-
-        // - Tương tác với Database
-        // - Redirect về get (Response)
         return 'Submit';
     }
 

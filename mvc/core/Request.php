@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use Core\Validator;
+
 class Request
 {
     private $path = null;
@@ -75,8 +77,25 @@ class Request
         return $this->path;
     }
 
-    public function validate()
+    public function getPrevPath()
     {
+        if (!empty($_SERVER['HTTP_REFERER'])) {
+            $refer = $_SERVER['HTTP_REFERER'];
+            $host = $_SERVER['HTTP_HOST'];
+            $protocol = !empty($_SERVER['HTTPS']) ? 'https://' : 'http://';
+            $prevPath = str_replace($protocol.$host, '', $refer);
+            return $prevPath;
+        }
 
+        return '/';
+
+    }
+
+    public function validate($rules, $messages, $attributes = [])
+    {
+        $validator = Validator::make($this->body, $rules, $messages, $attributes);
+        if ($validator->fails()) {
+            redirect($this->getPrevPath());
+        }
     }
 }
