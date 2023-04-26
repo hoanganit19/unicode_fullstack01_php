@@ -12,7 +12,6 @@ class HomeController extends Controller
     //Action
     public function index()
     {
-
         $title = 'Unicode Academy';
         $users = [
             'User 1',

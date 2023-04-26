@@ -49,3 +49,15 @@ Index => Bootstrap => App => Request, Response => Route
 
 - Abtract class
 - Interface
+
+Về nhà
+
+- Viết các phương thức truy vấn Database trong class Model
+- Thực hành: Xây dựng CRUD đơn giản (Có thể làm todolist)
+
+Buổi sau:
+
+- Tích hợp Query Builder vào dự án => Thuận tiện hơn trong quá trình truy vấn
+- Chữa bài tập CRUD
+
+=> Hướng tới làm project đơn giản

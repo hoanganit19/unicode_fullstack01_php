@@ -7,6 +7,8 @@ use Core\Request;
 use Core\Session;
 use Core\Validator;
 use Core\Controller;
+use App\Models\Product;
+use App\Models\Attribute;
 
 class ProductController extends Controller
 {
@@ -24,12 +26,15 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         //Load model
+        $productModel = new Product();
+
+        $attributeModel = new Attribute();
         //Logic
         //Load View
-        echo $request->keyword.'<br/>';
-        echo '<pre>';
-        print_r($request->category);
-        echo '</pre>';
+        // echo $request->keyword.'<br/>';
+        // echo '<pre>';
+        // print_r($request->category);
+        // echo '</pre>';
         return 'ProductController Index';
     }
 
