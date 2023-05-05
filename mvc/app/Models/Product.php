@@ -6,13 +6,18 @@ use Core\Model;
 
 class Product extends Model
 {
-    private $table = 'products';
+    protected $table = 'groups';
+    //protected $primaryKey = 'id';
 
     public function getListProduct()
     {
-        return $this->get("SELECT * FROM $this->table");
+        //echo 'a';
+        return $this->get(); //SELECT * FROM users;
     }
+
+
 }
 
 //Quy ước
 //1 table => 1 model
+//tạo 1 model => cá nhân hóa tương ứng với Table

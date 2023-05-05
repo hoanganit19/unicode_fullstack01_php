@@ -3,6 +3,7 @@
 use Core\View;
 
 use Core\Route;
+use Core\Databases\DB;
 use App\Controllers\HomeController;
 use App\Controllers\ProductController;
 
@@ -34,3 +35,11 @@ Route::post('/products/update/{id}', [ProductController::class, 'postEdit'])->na
 Route::get('/flash-sales', function () {
     View::render('home/flash-sales');
 })->name('flash-sales');
+
+Route::get('/test-database', function () {
+    //Truy vấn tới CSDL
+    $users = DB::get("SELECT * FROM users");
+    echo '<pre>';
+    print_r($users);
+    echo '</pre>';
+});

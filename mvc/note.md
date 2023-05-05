@@ -61,3 +61,19 @@ Buổi sau:
 - Chữa bài tập CRUD
 
 => Hướng tới làm project đơn giản
+
+Tình huống: Gọi Database ngoài Model
+
+Connect => DB Driver => DB Business
+
+Bài tập về nhà: Xây dựng CRUD đơn giản (TodoList)
+
+Master Layouts
+
+- Dùng Regex => Lấy đường dẫn tới file master layout
+
+- Lấy nội dung trong file master layout
+
+- Dùng Regex => Lấy nội dung section (Trong view)
+
+- Thay thế yield('name') thành nội dung trong section

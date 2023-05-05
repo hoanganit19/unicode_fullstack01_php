@@ -1,3 +1,10 @@
+@extends('layouts/client')
+
+@section('title')
+Trang chủ
+@endsection
+
+@section('content')
 <h1>HomeController Index</h1>
 <h2>{{ $title }}</h2>
 <h3>{{$subTitle ?? 'Không xác định'}}</h3>
@@ -11,3 +18,4 @@
 @foreach ($products as $key => $product)
 <h3>{{$key. ' - '. $product}}</h3>
 @endforeach
+@endsection

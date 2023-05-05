@@ -3,6 +3,7 @@
 namespace Core;
 
 use Exception;
+use Core\Databases\DB;
 use Core\Interfaces\ValidatorInterface;
 
 class Validator implements ValidatorInterface
@@ -67,6 +68,52 @@ class Validator implements ValidatorInterface
                                         self::$self->setMessages($messages[$ruleName], $field, $attributes, [
                                             ':same' => $attributes[$ruleValue] ?? $ruleValue
                                         ]);
+                                    }
+                                }
+
+                                if ($ruleName == 'unique' && !empty($ruleValue) && isset($request[$field])) {
+                                    $ruleValueArr = array_filter(explode(',', $ruleValue));
+                                    if (!empty($ruleValueArr[0]) && !empty($ruleValueArr[1])) {
+                                        $tableName = $ruleValueArr[0];
+                                        $fieldName = $ruleValueArr[1];
+
+                                        $sql = "SELECT * FROM $tableName WHERE $fieldName=?";
+
+                                        $data  = [$request[$field]];
+
+
+
+                                        if ($ruleValueArr[2]) {
+                                            $ignoreValue = $ruleValueArr[2];
+
+                                            $row = DB::first("SELECT 
+                                            KU.table_name as TABLENAME
+                                           ,column_name as `primary`
+                                       FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS TC 
+                                       
+                                       INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE AS KU
+                                           ON TC.CONSTRAINT_TYPE = 'PRIMARY KEY' 
+                                           AND TC.CONSTRAINT_NAME = KU.CONSTRAINT_NAME 
+                                           AND KU.table_name='users'
+                                       
+                                       ORDER BY 
+                                            KU.TABLE_NAME
+                                           ,KU.ORDINAL_POSITION
+                                       LIMIT 1;");
+
+                                            if (!empty($row)) {
+                                                $primaryKey = $row['primary'];
+                                            }
+
+                                            $sql.=" AND $primaryKey != ?";
+                                            $data[] = $ignoreValue;
+                                        }
+
+                                        $count = DB::count($sql, $data);
+
+                                        if ($count > 0) {
+                                            self::$self->setMessages($messages[$ruleName], $field, $attributes);
+                                        }
                                     }
                                 }
                             }

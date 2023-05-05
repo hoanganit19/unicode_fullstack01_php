@@ -7,6 +7,7 @@ use Core\Request;
 use Core\Session;
 use Core\Validator;
 use Core\Controller;
+use Core\Databases\DB;
 use App\Models\Product;
 use App\Models\Attribute;
 
@@ -27,8 +28,13 @@ class ProductController extends Controller
     {
         //Load model
         $productModel = new Product();
+        $products = $productModel->getListProduct();
+        echo '<pre>';
+        print_r($products);
+        echo '</pre>';
 
-        $attributeModel = new Attribute();
+
+        //$attributeModel = new Attribute();
         //Logic
         //Load View
         // echo $request->keyword.'<br/>';
@@ -53,11 +59,13 @@ class ProductController extends Controller
 
     public function postAdd(Request $request)
     {
+        $id = 7;
+
         $request->validate(
             [
                 //tên trường => danh sách rules
                 'name' => 'required|min:4|max:15',
-                'email' => 'required|email',
+                'email' => 'required|email|unique:users,email,'.$id,
                 'password' => 'required|min:6',
                 'confirm_password' => 'required|min:6|same:password'
             ],
@@ -67,7 +75,8 @@ class ProductController extends Controller
                 'min' => ':attribute phải từ :min ký tự',
                 'max' => ':attribute không được lớn hơn :max ký tự',
                 'same' => ':attribute không khớp với :same',
-                'email' => ':attribute không đúng định dạng email'
+                'email' => ':attribute không đúng định dạng email',
+                'unique' => ':attribute đã tồn tại trong hệ thống'
             ],
             [
                 'name' => 'Tên',
@@ -78,7 +87,7 @@ class ProductController extends Controller
         );
         // $validator = Validator::make(
         //     $request->all(),
-        // [
+        //     [
         //     //tên trường => danh sách rules
         //     'name' => 'required|min:4|max:15',
         //     'email' => 'required|email',
