@@ -77,3 +77,20 @@ Master Layouts
 - Dùng Regex => Lấy nội dung section (Trong view)
 
 - Thay thế yield('name') thành nội dung trong section
+
+Sử dụng Javascript Internal và CSS Internal trong Layout
+
+$( "button.continue" ).html( "Next Step..." )
+
+document.querySelector('button.continue').innerHTML = "Next Step..."
+
+$('.item').each(function(){
+    console.log($(this).text())
+});
+
+Provider => Route => Middleware => Controller => View
+
+## Dự án blog cá nhân
+
+- Quản trị
+- Người dùng

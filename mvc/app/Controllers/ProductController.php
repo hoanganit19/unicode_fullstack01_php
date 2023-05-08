@@ -29,10 +29,7 @@ class ProductController extends Controller
         //Load model
         $productModel = new Product();
         $products = $productModel->getListProduct();
-        echo '<pre>';
-        print_r($products);
-        echo '</pre>';
-
+        return json_encode($products);
 
         //$attributeModel = new Attribute();
         //Logic
@@ -41,7 +38,7 @@ class ProductController extends Controller
         // echo '<pre>';
         // print_r($request->category);
         // echo '</pre>';
-        return 'ProductController Index';
+        //return 'ProductController Index';
     }
 
     public function add(Request $request)

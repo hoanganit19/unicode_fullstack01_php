@@ -27,6 +27,15 @@ class App
         $dotenv = Dotenv::createImmutable(WEB_PATH_ROOT);
         $dotenv->safeLoad();
 
+        //Load Provideer
+        $providers = config('app.providers');
+        if (!empty($providers)) {
+            foreach ($providers as $provider) {
+                //Tạo object
+                call_user_func_array([new $provider(), 'boot'], []);
+            }
+        }
+
         $this->route = new Route(new Request());
         $this->route->execute();
     }

@@ -2,22 +2,34 @@
 
 namespace Core;
 
+use Core\Template;
+
 class View
 {
+    public static $share = [];
+
     public static function render($path, $data = [])
     {
-        extract($data);
-
         $contentView = self::getView($path);
 
-        //Thay thế
-        $contentView = preg_replace('/{{\s*(.+?)\s*}}/s', '<?php echo htmlentities($1); ?>', $contentView);
+        $contentView = Template::run($contentView);
 
-        $contentView = preg_replace('/{!!\s*(.+?)\s*!!}/s', '<?php echo $1; ?>', $contentView);
+        $dataSubView = Template::$data;
 
-        $contentView = preg_replace('/@foreach\s*\((.+?)\)/s', '<?php foreach ($1): ?>', $contentView);
+        if (!empty($dataSubView)) {
+            foreach($dataSubView as $item) {
+                $data = array_merge($data, $item);
+            }
 
-        $contentView = preg_replace('/@endforeach/s', '<?php endforeach; ?>', $contentView);
+        }
+
+        if (!empty(self::$share)) {
+            foreach(self::$share as $item) {
+                $data = array_merge($data, $item);
+            }
+        }
+
+        extract($data);
 
         eval('?> '.$contentView.' <?php');
     }
@@ -26,5 +38,10 @@ class View
     {
         $path = WEB_PATH_APP.'/Views/'.$path.'.php';
         return file_get_contents($path);
+    }
+
+    public static function share($data = [])
+    {
+        self::$share[] = $data;
     }
 }

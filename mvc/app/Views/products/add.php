@@ -1,3 +1,6 @@
+@extends('layouts/client')
+
+@section('content')
 <form action="{{route('products-post')}}" method="post">
     <div>
         <label for="">Name</label>
@@ -21,3 +24,18 @@
     </div>
     <button type="submit">Submit</button>
 </form>
+@endsection
+
+@section('js')
+<script>
+console.log('abc');
+</script>
+@endsection
+
+@section('css')
+<style>
+h1 {
+    color: red;
+}
+</style>
+@endsection

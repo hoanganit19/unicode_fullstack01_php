@@ -3,15 +3,19 @@
 namespace App\Controllers;
 
 use Core\View;
+use Core\Session;
 use Core\Controller;
 
 class HomeController extends Controller
 {
     //private $data = [];
 
+
+
     //Action
     public function index()
     {
+
         $title = 'Unicode Academy';
         $users = [
             'User 1',
@@ -40,7 +44,7 @@ class HomeController extends Controller
             'title',
             'users',
             'content',
-            'products'
+            'products',
         ));
     }
 
