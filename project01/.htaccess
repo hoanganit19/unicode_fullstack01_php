@@ -1,0 +1,5 @@
+RewriteEngine On
+RewriteCond %{REQUEST_URI} !^/public
+# Nếu request khác public => Ánh xạ vào các path trong public:
+# product/detail => public/product/detail
+RewriteRule ^(.*)$ /public/$1 [L]

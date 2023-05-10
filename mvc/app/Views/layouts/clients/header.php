@@ -1,7 +1,7 @@
 <header>
     <h1>HEADER</h1>
     <p>
-        Chào bạn: {{$user['name']}}
+        Chào bạn: {{!empty($user['name']) ? $user['name']: ''}}
     </p>
     <h2>{{$subTitle}}</h2>
     <h3>{{$title}}</h3>

@@ -329,3 +329,20 @@ Provider => Route => Middleware => Controller => View
 
 * text
 * null
+
+### Ghép giao diện trang quản trị
+
+- Xác định Route: Tiền tố `/admin`
+
+- Tạo Controller => Action
+
+- Tạo Layouts
+
+- Tạo Views
+
+- Tạo assets: css, js, images, fonts,...
+
+Đặc điểm Controller
+
+- Không được hard code: Thông báo, chuỗi cố định
+- Không được lưu trữ HTML, trả về html
