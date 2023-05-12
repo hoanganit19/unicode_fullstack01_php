@@ -12,4 +12,9 @@ class User extends Model
     {
         return $this->first(null, "$field=?", [$value]);
     }
+
+    public function updateUser($data, $id)
+    {
+        return $this->update(null, $data, $id);
+    }
 }

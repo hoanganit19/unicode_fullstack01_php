@@ -16,7 +16,7 @@ Route::get('/admin/categories/add', [CategoriesController::class, 'add'])->name(
 //Auth Routes
 Route::get('/auth/login', [LoginController::class, 'getForm'])->name('auth.login');
 Route::post('/auth/login', [LoginController::class, 'login']);
-
+Route::post('/auth/logout', [LoginController::class, 'logout'])->name('auth.logout');
 
 Route::get('/', function () {
     View::render('welcome');

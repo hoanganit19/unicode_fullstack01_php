@@ -81,7 +81,7 @@ trait Database
         return $this->conn->lastInsertId();
     }
 
-    private function update($table, $attributes = [], $condition = null)
+    private function update($table=null, $attributes = [], $condition = null)
     {
         //$sql = "UPDATE users SET name=:name, email=:email WHERE id=1";
         if (!empty($attributes)) {
@@ -99,7 +99,12 @@ trait Database
             $updateStr = rtrim($updateStr, ', ');
 
             if (!empty($condition)) {
-                $sql = "UPDATE $table SET $updateStr WHERE $condition";
+                if ($this->primaryKey) {
+                    $sql = "UPDATE $table SET $updateStr WHERE $this->primaryKey=$condition";
+                } else {
+                    $sql = "UPDATE $table SET $updateStr WHERE $condition";
+                }
+
             } else {
                 $sql = "UPDATE $table SET $updateStr";
             }

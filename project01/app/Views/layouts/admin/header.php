@@ -23,7 +23,12 @@
                 <li>
                     <hr class="dropdown-divider" />
                 </li>
-                <li><a class="dropdown-item" href="#!">Logout</a></li>
+                <li><a class="dropdown-item" onclick="if (confirm('Bạn có muốn đăng xuất?')){
+                    event.preventDefault();
+                    document.querySelector('#logout_form').action = event.target.href;
+                    document.querySelector('#logout_form').submit();
+                }" href="{{route('auth.logout')}}">Đăng xuất</a></li>
+                <form action="" id="logout_form" method="post"></form>
             </ul>
         </li>
     </ul>

@@ -121,7 +121,7 @@ class Route
                 echo call_user_func_array([$controllerObj, $actionName], $paramHandle);
             }
         } else {
-            require_once '../core/errors/404.php';
+            abort('404');
         }
 
     }

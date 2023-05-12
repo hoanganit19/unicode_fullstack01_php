@@ -98,4 +98,25 @@ class Request
             redirect($this->getPrevPath());
         }
     }
+
+    public function is($path)
+    {
+        $currentPath = $this->getPath();
+        if (strpos($currentPath, '*') !== false) {
+            $path = str_replace('*', '.+?', $path); //pattern regex
+            if (preg_match('~'.$path.'~i', $currentPath)) {
+                return true;
+            }
+        } else {
+            if ($currentPath == $path) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    //$request->is('admin') ==> Check getPath == 'admin'
+
+    //$request->is('admin/*') => Check getPath có tiền tố là admin
 }

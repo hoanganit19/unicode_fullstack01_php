@@ -346,3 +346,45 @@ Provider => Route => Middleware => Controller => View
 
 - Không được hard code: Thông báo, chuỗi cố định
 - Không được lưu trữ HTML, trả về html
+
+### Middleware
+
+- Lớp trung gian giữa Route => Controller
+- Lọc Request: Cho phép Request từ Route tới Controller hay không?
+- 2 loại Middleware:
+
+* Route Middleware: Chỉ áp dụng cho 1 số route nhất định
+* Global Middleware: Áp dụng cho tất cả route
+
+Alias Class trong OOP
+
+- Đổi tên 1 class của PHP và vẫn giữ nguyên class gốc
+- Import bằng use kết hợp với as
+- Dùng qua class_alias
+
+Đăng nhập qua Cookie
+
+- Không an toàn: Vì lưu ở browser
+- Không đồng nhất giữa user client và user trên database
+
+Xây dựng chức năng lưu mật khẩu
+
+- Đăng nhập bình thường: Set session
+- Nếu check vào Remember
+- Tạo token
+- Update token vào Database
+- Lưu Token vào cookie
+
+Khi kiểm tra đăng nhập
+
+- Session có tồn tại hay không?
+- Session không tồn tại:
+
+* Cookie rememberToken có tồn tại hay không? Nếu không => Không làm gì
+* Cookie rememberToken tồn tại: Truy vấn tới database với data là rememberToken => trả về dữ liệu => set Session => Login
+
+Lợi ích:
+
+- An toàn: Cookie chỉ lưu token
+- Kiểm soát được user có còn tồn tại hay không?
+- Tránh được việc connect database nhiều lần
