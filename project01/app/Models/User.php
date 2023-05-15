@@ -8,6 +8,9 @@ class User extends Model
 {
     protected $table = 'users';
 
+    protected $createdAt = 'created_at';
+    protected $updatedAt = 'update_at';
+
     public function getUser($field = 'id', $value)
     {
         return $this->first(null, "$field=?", [$value]);

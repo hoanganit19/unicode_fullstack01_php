@@ -6,6 +6,7 @@
     </div>
     <div class="card-body">
         {!! !empty($msg) ? '<div class="alert alert-danger">'.$msg.'</div>': '' !!}
+
         <form method="post">
             <div class="form-floating mb-3">
                 <input class="form-control" id="inputEmail" name="email" type="text" placeholder="name@example.com"

@@ -19,6 +19,8 @@ class Template
 
         $contentView = self::foreachLoop($contentView);
 
+        $contentView = self::ifCondition($contentView);
+
         return $contentView;
     }
 
@@ -66,46 +68,74 @@ class Template
         $pattern = '/{{\s*(.+?)\s*}}/s';
         $contentView = preg_replace($pattern, '<?php echo htmlentities($1); ?>', $contentView);
 
-        $pattern = '/{!!\s*(.+?)\s*!!}/s';
-        $contentView = preg_replace($pattern, '<?php echo $1; ?>', $contentView);
+$pattern = '/{!!\s*(.+?)\s*!!}/s';
+$contentView = preg_replace($pattern, '<?php echo $1; ?>', $contentView);
 
-        return $contentView;
-    }
+return $contentView;
+}
 
 public static function foreachLoop($contentView)
 {
-    $contentView = preg_replace('/@foreach\s*\((.+?)\)/s', '<?php foreach ($1): ?>', $contentView);
+$contentView = preg_replace('/@foreach\s*\((.+?)\)/s', '<?php foreach ($1): ?>', $contentView);
 
-    $contentView = preg_replace('/@endforeach/s', '<?php endforeach; ?>', $contentView);
-    return $contentView;
+$contentView = preg_replace('/@endforeach/s', '<?php endforeach; ?>', $contentView);
+return $contentView;
 }
 
 public static function include($contentView)
 {
-    $basePath = WEB_PATH_APP.'/Views/';
-    preg_match_all('~@include\(\'(.+?)\'(?:\s*,\s*(.+?))*\)~s', $contentView, $matches);
+$basePath = WEB_PATH_APP.'/Views/';
+preg_match_all('~@include\(\'(.+?)\'(?:\s*,\s*(.+?))*\)~s', $contentView, $matches);
 
 
-    if (!empty($matches[0])) {
-        foreach ($matches[0] as $key => $value) {
-            $args = !empty($matches[2][$key]) ? $matches[2][$key] : [];
-            $pathView = $basePath.$matches[1][$key].'.php';
+if (!empty($matches[0])) {
+foreach ($matches[0] as $key => $value) {
+$args = !empty($matches[2][$key]) ? $matches[2][$key] : [];
+$pathView = $basePath.$matches[1][$key].'.php';
 
-            $result = [];
-            if (!empty($args)) {
-                if (preg_match("/'(.*?)' => '(.*?)'/", $args, $matchesArgs)) {
-                    $result[ $matchesArgs[1] ] = $matchesArgs[2];
-                }
-                self::$data[] = $result;
-            }
+$result = [];
+if (!empty($args)) {
+if (preg_match("/'(.*?)' => '(.*?)'/", $args, $matchesArgs)) {
+$result[ $matchesArgs[1] ] = $matchesArgs[2];
+}
+self::$data[] = $result;
+}
 
-            $contentSubView = file_get_contents($pathView);
+$contentSubView = file_get_contents($pathView);
 
 
-            $contentView = preg_replace('~@include\(\''.$matches[1][$key].'\'(?:\s*,\s*(.+?))*\)~s', $contentSubView, $contentView);
+$contentView = preg_replace('~@include\(\''.$matches[1][$key].'\'(?:\s*,\s*(.+?))*\)~s', $contentSubView, $contentView);
 
-        }
-    }
-    return $contentView;
+}
+}
+return $contentView;
+}
+
+public static function ifCondition($contentView)
+{
+preg_match_all('~@if\s*\((.+?)\s*\)\s*$~im', $contentView, $matches);
+if (!empty($matches[1])) {
+foreach ($matches[1] as $key=>$item) {
+$contentView = str_replace($matches[0][$key], '<?php if ('.$item.'): ?>', $contentView);
+}
+}
+
+preg_match_all('~@else\s*$~im', $contentView, $matches);
+
+if (!empty($matches[0])) {
+foreach ($matches[0] as $key=>$item) {
+$contentView = str_replace($matches[0][$key], '<?php else: ?>', $contentView);
+}
+}
+
+preg_match_all('~@endif\s*$~im', $contentView, $matches);
+
+if (!empty($matches[0])) {
+foreach ($matches[0] as $key=>$item) {
+$contentView = str_replace($matches[0][$key], '<?php endif; ?>', $contentView);
+}
+}
+
+return $contentView;
 }
 }

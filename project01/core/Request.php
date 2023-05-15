@@ -102,8 +102,10 @@ class Request
     public function is($path)
     {
         $currentPath = $this->getPath();
-        if (strpos($currentPath, '*') !== false) {
+
+        if (strpos($path, '*') !== false) {
             $path = str_replace('*', '.+?', $path); //pattern regex
+
             if (preg_match('~'.$path.'~i', $currentPath)) {
                 return true;
             }

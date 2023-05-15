@@ -10,4 +10,5 @@ class Model
     protected $table = null;
     protected $primaryKey = 'id';
     protected $fields = "*";
+    protected $timestamps = true;
 }

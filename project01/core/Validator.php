@@ -86,24 +86,23 @@ class Validator implements ValidatorInterface
                                         if ($ruleValueArr[2]) {
                                             $ignoreValue = $ruleValueArr[2];
 
-                                            $row = DB::first("SELECT 
-                                            KU.table_name as TABLENAME
-                                           ,column_name as `primary`
-                                       FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS TC 
-                                       
-                                       INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE AS KU
-                                           ON TC.CONSTRAINT_TYPE = 'PRIMARY KEY' 
-                                           AND TC.CONSTRAINT_NAME = KU.CONSTRAINT_NAME 
-                                           AND KU.table_name='users'
-                                       
-                                       ORDER BY 
-                                            KU.TABLE_NAME
-                                           ,KU.ORDINAL_POSITION
-                                       LIMIT 1;");
+                                            $connection = config('database.connection_default');
+
+                                            $config = config('database.'.$connection);
+
+
+                                            $row = DB::first("SELECT GROUP_CONCAT(COLUMN_NAME) as `primary`
+                                            FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+                                            WHERE
+                                              TABLE_SCHEMA = '".$config['db_name']."'
+                                              AND CONSTRAINT_NAME='PRIMARY'
+                                              AND TABLE_NAME='$tableName'
+                                            GROUP BY TABLE_NAME LIMIT 1");
 
                                             if (!empty($row)) {
                                                 $primaryKey = $row['primary'];
                                             }
+
 
                                             $sql.=" AND $primaryKey != ?";
                                             $data[] = $ignoreValue;
@@ -161,5 +160,12 @@ class Validator implements ValidatorInterface
     private function isValidate()
     {
         return empty($this->messages);
+    }
+
+    public static function putError($field, $message)
+    {
+        self::$self->messages[$field][] = $message;
+
+        Session::put('validate_errors', self::$self->messages);
     }
 }

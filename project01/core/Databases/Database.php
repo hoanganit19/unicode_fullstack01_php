@@ -4,6 +4,7 @@ namespace Core\Databases;
 
 use PDO;
 use Exception;
+use Carbon\Carbon;
 use Core\Databases\Connection;
 
 trait Database
@@ -66,6 +67,15 @@ trait Database
                 $table = $this->table;
             }
 
+            if ($this->timestamps) {
+                $createdAt = $this->createdAt ? $this->createdAt : 'created_at';
+                $updatedAt = $this->updatedAt ? $this->updatedAt : 'updated_at';
+
+                $attributes[$createdAt] = Carbon::now();
+                $attributes[$updatedAt] = Carbon::now();
+
+            }
+
             $keys = array_keys($attributes);
             $sql = "INSERT INTO $table(".implode(', ', $keys).") VALUES(".':'.implode(', :', $keys).")";
             $status = $this->query($sql, $attributes);
@@ -89,6 +99,13 @@ trait Database
             if (!empty($this->table)) {
                 $table = $this->table;
             }
+
+            if ($this->timestamps) {
+                $updatedAt = $this->updatedAt ? $this->updatedAt : 'updated_at';
+
+                $attributes[$updatedAt] = Carbon::now();
+            }
+
 
             $keys = array_keys($attributes);
             $updateStr = "";
