@@ -14,9 +14,135 @@ use App\Core\Message;
 class UserController extends Controller
 {
     private $user = null;
+
+
     public function __construct()
     {
         $this->user = new User();
+    }
+
+    public function index()
+    {
+        $pageTitle = Message::$pageTitle['users']['lists'];
+        $msg = Session::getFlash('msg');
+
+        $users = $this->user->getUsers();
+
+        $action = route('admin.users.deletes');
+
+        $this->view('admin/users/lists', compact('pageTitle', 'msg', 'users', 'action'));
+    }
+
+    public function add()
+    {
+        $pageTitle = Message::$pageTitle['users']['lists'];
+        $msg = Session::getFlash('msg');
+
+        $this->view('admin/users/add', compact('pageTitle', 'msg'));
+    }
+
+    public function handleAdd(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|min:5',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6',
+            'confirm_password' => 'required|same:password'
+        ], [
+            'required' => Message::$messages['users']['validate']['required'],
+            'min' => Message::$messages['users']['validate']['min'],
+            'email' => Message::$messages['users']['validate']['email'],
+            'unique' => Message::$messages['users']['validate']['unique'],
+            'same' => Message::$messages['users']['validate']['same']
+        ], Message::$messages['users']['attributes']);
+
+        $this->user->create(attributes: [
+            'name' => $request->name,
+            'email' => $request->email,
+            'status' => $request->status,
+            'password' => password_hash($request->password, PASSWORD_DEFAULT)
+        ]);
+
+        Session::put('msg', 'Thêm người dùng thành công');
+
+        redirect(route('admin.users.index'));
+    }
+
+    public function edit($id)
+    {
+        $pageTitle = Message::$pageTitle['users']['edit'];
+        $msg = Session::getFlash('msg');
+
+        $user = $this->user->getUser('id', $id);
+
+        $this->view('admin/users/edit', compact('pageTitle', 'msg', 'user'));
+    }
+
+    public function handleEdit(Request $request, $id)
+    {
+        $rules = [
+            'name' => 'required|min:5',
+            'email' => 'required|email|unique:users,email,'.$id,
+        ];
+
+        $attributes = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'status' => $request->status,
+
+        ];
+
+        $rulePassword = [];
+
+        if ($request->password) {
+
+            $rulePassword = [
+                'password' => 'required|min:6',
+                'confirm_password' => 'required|same:password'
+            ];
+
+            $attributes['password'] = password_hash($request->password, PASSWORD_DEFAULT);
+        }
+
+        $request->validate(array_merge($rules, $rulePassword), [
+            'required' => Message::$messages['users']['validate']['required'],
+            'min' => Message::$messages['users']['validate']['min'],
+            'email' => Message::$messages['users']['validate']['email'],
+            'unique' => Message::$messages['users']['validate']['unique'],
+            'same' => Message::$messages['users']['validate']['same']
+        ], Message::$messages['users']['attributes']);
+
+        $this->user->updateUser($attributes, $id);
+
+        Session::put('msg', 'Cập nhật người dùng thành công');
+
+        redirect(route('admin.users.edit', ['id' => $id]));
+    }
+
+    public function delete($id)
+    {
+        if (Auth::user()->id != $id) {
+            $this->user->delete(condition: "id = ?", data: [$id]);
+            Session::put('msg', 'Xóa người dùng thành công');
+        } else {
+            Session::put('msg', 'Người dùng đang đăng nhập');
+        }
+
+        redirect(route('admin.users.index'));
+    }
+
+    public function deletes(Request $request)
+    {
+        if ($request->ids) {
+            $ids = $request->ids;
+
+            $condition = "id IN($ids)";
+            $this->user->delete(condition: $condition);
+            Session::put('msg', 'Xóa người dùng thành công');
+
+        }
+
+        redirect(route('admin.users.index'));
     }
 
     public function profile()

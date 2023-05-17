@@ -11,7 +11,10 @@ class Message
         ],
         'users' => [
             'profile' => 'Tài khoản',
-            'password' => 'Đổi mật khẩu'
+            'password' => 'Đổi mật khẩu',
+            'lists' => 'Danh sách người dùng',
+            'add' => 'Thêm người dùng',
+            'edit' => 'Cập nhật người dùng'
         ]
     ];
 

@@ -36,7 +36,7 @@ trait Database
     private function get($sql = null, $data = [])
     {
         //fetchAll()
-        if (!empty($this->table)) {
+        if (!empty($this->table) && $sql == null) {
             $sql = "SELECT $this->fields FROM $this->table";
         }
 

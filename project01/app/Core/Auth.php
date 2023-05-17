@@ -41,7 +41,7 @@ class Auth
 
     public static function logout()
     {
-        Session::destroy('userLogin');
+        $status = Session::destroy('userLogin');
         Cookie::destroy('rememberToken');
         return true;
     }

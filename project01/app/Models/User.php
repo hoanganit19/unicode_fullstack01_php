@@ -11,6 +11,11 @@ class User extends Model
     protected $createdAt = 'created_at';
     protected $updatedAt = 'update_at';
 
+    public function getUsers()
+    {
+        return $this->get("SELECT * FROM $this->table ORDER BY created_at DESC");
+    }
+
     public function getUser($field = 'id', $value)
     {
         return $this->first(null, "$field=?", [$value]);

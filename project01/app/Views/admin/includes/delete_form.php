@@ -1,0 +1,1 @@
+<form action="" class="delete-form" method="post"></form>
