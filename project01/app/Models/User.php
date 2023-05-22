@@ -13,7 +13,8 @@ class User extends Model
 
     public function getUsers()
     {
-        return $this->get("SELECT * FROM $this->table ORDER BY created_at DESC");
+        //return $this->get("SELECT * FROM $this->table ORDER BY created_at DESC");
+        return $this->paginate("SELECT * FROM $this->table ORDER BY created_at DESC", config('paginate.admin'));
     }
 
     public function getUser($field = 'id', $value)

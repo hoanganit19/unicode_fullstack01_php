@@ -20,6 +20,7 @@ class App
 
     public function execute()
     {
+        require_once '../core/helpers/request.php';
         require_once '../core/helpers/url.php';
         require_once '../core/helpers/validation.php';
         require_once '../core/helpers/config.php';

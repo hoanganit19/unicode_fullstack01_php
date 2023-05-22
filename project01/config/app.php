@@ -2,6 +2,7 @@
 
 use Core\Session;
 use App\Core\Auth;
+use Carbon\Carbon;
 use Core\Databases\DB;
 use App\Middlewares\AuthMiddleware;
 use App\Middlewares\GuestMiddleware;
@@ -20,6 +21,7 @@ return [
     'alias' => [
         'Auth' => Auth::class,
         'DB' => DB::class,
-        'Session' => Session::class
+        'Session' => Session::class,
+        'Carbon' => Carbon::class
     ]
 ];

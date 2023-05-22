@@ -1,5 +1,6 @@
 @extends('layouts/admin.master')
 @section('content')
+
 <div class="py-3">
     <h1>{{$pageTitle}}</h1>
     {{message($msg)}}
@@ -13,7 +14,7 @@
                 <th>Tên</th>
                 <th>Email</th>
                 <th>Trạng thái</th>
-                <th width="10%">Hành động</th>
+                <th width="15%">Hành động</th>
             </tr>
         </thead>
         <tbody>

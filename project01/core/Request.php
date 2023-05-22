@@ -118,6 +118,11 @@ class Request
         return false;
     }
 
+    public function getParams()
+    {
+        return $_SERVER['QUERY_STRING'] ? $_SERVER['QUERY_STRING'] : null;
+    }
+
     //$request->is('admin') ==> Check getPath == 'admin'
 
     //$request->is('admin/*') => Check getPath có tiền tố là admin

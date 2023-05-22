@@ -2,6 +2,7 @@
 
 use Core\View;
 use Core\Route;
+use App\Controllers\Admin\PageController;
 use App\Controllers\Admin\UserController;
 use App\Controllers\Auth\LoginController;
 use App\Controllers\Admin\DashboardController;
@@ -34,6 +35,21 @@ Route::get('/admin/users/change-password', [UserController::class, 'changePasswo
 
 Route::post('/admin/users/change-password', [UserController::class, 'updatePassword']);
 
+//Pages
+Route::get('/admin/pages', [PageController::class, 'index'])->name('admin.pages.index');
+
+Route::get('/admin/pages/add', [PageController::class, 'add'])->name('admin.pages.add');
+
+Route::post('/admin/pages/add', [PageController::class, 'handleAdd']);
+
+Route::get('/admin/pages/edit/{id}', [PageController::class, 'edit'])->name('admin.pages.edit');
+
+Route::post('/admin/pages/edit/{id}', [PageController::class, 'handleEdit']);
+
+Route::post('/admin/pages/delete/{id}', [PageController::class, 'delete'])->name('admin.pages.delete');
+
+Route::post('/admin/pages/deletes', [PageController::class, 'deletes'])->name('admin.pages.deletes');
+
 //Route Prefix
 //Nested Route
 
@@ -45,3 +61,8 @@ Route::post('/admin/users/logout', [LoginController::class, 'logout'])->name('au
 Route::get('/', function () {
     View::render('welcome');
 });
+
+//Route Client
+Route::get('/{slug}.html', function ($slug) {
+    return 'Trang: '.$slug;
+})->name('client.page');

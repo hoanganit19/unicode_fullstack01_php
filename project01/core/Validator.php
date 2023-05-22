@@ -120,9 +120,13 @@ class Validator implements ValidatorInterface
                     }
 
                     //Xử lý gán message cho session
-                    Session::put('validate_errors', self::$self->messages);
+                    if (!empty(self::$self->messages)) {
+                        Session::put('validate_errors', self::$self->messages);
 
-                    Session::put('validate_old', $request);
+                        Session::put('validate_old', $request);
+                    }
+
+
                 }
 
             } else {

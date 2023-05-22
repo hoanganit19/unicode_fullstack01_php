@@ -7,6 +7,8 @@
 // Scripts
 //
 
+import { toSlug } from "./functions.js";
+
 window.addEventListener("DOMContentLoaded", (event) => {
   // Toggle the side navigation
   const sidebarToggle = document.body.querySelector("#sidebarToggle");
@@ -97,5 +99,44 @@ window.addEventListener("DOMContentLoaded", (event) => {
         e.target.submit();
       }
     });
+  }
+
+  const titleEl = document.querySelector(".title");
+  const slugEl = document.querySelector(".slug");
+  let title, slug;
+  if (titleEl && slugEl) {
+    titleEl.addEventListener("change", (e) => {
+      title = e.target.value;
+      slug = toSlug(title);
+      if (title.length && !slugEl.value.length) {
+        slugEl.value = slug;
+      }
+    });
+
+    slugEl.addEventListener("change", (e) => {
+      if (!e.target.value) {
+        e.target.value = slug;
+      }
+    });
+  }
+
+  const formEl = document.querySelectorAll("main form");
+
+  if (formEl.length) {
+    let check = false;
+    formEl.forEach((form) => {
+      if (
+        !form.classList.contains("delete-form") &&
+        !form.classList.contains("deletes-form")
+      ) {
+        check = true;
+      }
+    });
+
+    if (check) {
+      document.body.onbeforeunload = function () {
+        return "Bạn có muốn chuyển?";
+      };
+    }
   }
 });

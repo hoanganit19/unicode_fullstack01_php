@@ -28,9 +28,13 @@ class UserController extends Controller
 
         $users = $this->user->getUsers();
 
+        $links = $this->user->links($users, true);
+
+        $users = $users['data'];
+
         $action = route('admin.users.deletes');
 
-        $this->view('admin/users/lists', compact('pageTitle', 'msg', 'users', 'action'));
+        $this->view('admin/users/lists', compact('pageTitle', 'msg', 'users', 'action', 'links'));
     }
 
     public function add()
