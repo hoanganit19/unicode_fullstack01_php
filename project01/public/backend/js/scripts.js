@@ -139,4 +139,46 @@ window.addEventListener("DOMContentLoaded", (event) => {
       };
     }
   }
+
+  const ckfinderGroup = document.querySelectorAll(".ckfinder-group");
+  if (ckfinderGroup.length) {
+    ckfinderGroup.forEach((group) => {
+      group.addEventListener("click", (e) => {
+        if (e.target.classList.contains("choose-image")) {
+          CKFinder.modal({
+            chooseFiles: true,
+            width: 800,
+            height: 600,
+            onInit: function (finder) {
+              const inputEl = group.querySelector(".ckfinder-image");
+              const previewImage = group.querySelector(".ckfinder-preview");
+              if (inputEl !== null) {
+                finder.on("files:choose", function (evt) {
+                  var file = evt.data.files.first();
+
+                  inputEl.value = file.getUrl();
+
+                  previewImage.innerHTML = `<img src="${file.getUrl()}" style="max-width: 100%"/>`;
+                });
+
+                finder.on("file:choose:resizedImage", function (evt) {
+                  inputEl.value = evt.data.resizedUrl;
+                  previewImage.innerHTML = `<img src="${evt.data.resizedUrl}" style="max-width: 100%"/>`;
+                });
+              }
+            },
+          });
+        }
+      });
+
+      group.addEventListener("change", (e) => {
+        if (!e.target.value) {
+          const previewImage = group.querySelector(".ckfinder-preview");
+          if (previewImage !== null) {
+            previewImage.innerText = "";
+          }
+        }
+      });
+    });
+  }
 });

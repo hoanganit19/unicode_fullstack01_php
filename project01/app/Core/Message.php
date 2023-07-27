@@ -20,6 +20,16 @@ class Message
             'lists' => 'Danh sách trang',
             'add' => 'Thêm trang',
             'edit' => 'Cập nhật trang'
+        ],
+        'categories' => [
+            'lists' => 'Danh sách chuyên mục',
+            'add' => 'Thêm chuyên mục',
+            'edit' => 'Cập nhật chuyên mục'
+        ],
+        'posts' => [
+            'lists' => 'Danh sách bài viết',
+            'add' => 'Thêm bài viết',
+            'edit' => 'Cập nhật bài viết'
         ]
     ];
 
@@ -65,5 +75,32 @@ class Message
 
              ],
          ],
+
+         'categories' => [
+            'validate' => [
+                 'required' => ':attribute bắt buộc phải nhập',
+                 'unique' => ':attribute đã có người sử dụng',
+            ],
+            'attributes' => [
+                 'name' => 'Tên',
+                 'slug' => 'Slug',
+
+             ],
+         ],
+
+         'posts' => [
+            'validate' => [
+                'required' => ':attribute bắt buộc phải nhập',
+                'unique' => ':attribute đã có người sử dụng',
+           ],
+           'attributes' => [
+                'title' => 'Tiêu đề',
+                'slug' => 'Slug',
+                'content' => 'Nội dung',
+                'thumbnail' => 'Ảnh đại diện',
+                'category_id' => 'Chuyên mục'
+            ],
+         ],
+
     ];
 }

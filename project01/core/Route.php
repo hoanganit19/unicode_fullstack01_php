@@ -92,6 +92,7 @@ class Route
         if (!empty($callback)) {
 
             if ($callback instanceof Closure) {
+
                 echo call_user_func_array($callback, $params);
             } elseif(is_array($callback)) {
                 $controllerName = $callback[0];

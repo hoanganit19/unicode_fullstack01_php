@@ -8,6 +8,7 @@ class Template
 
     public static function run($contentView)
     {
+
         //Xử lý master layout
         $contentView = self::masterLayout($contentView);
 
@@ -87,7 +88,6 @@ public static function include($contentView)
 $basePath = WEB_PATH_APP.'/Views/';
 preg_match_all('~@include\(\'(.+?)\'(?:\s*,\s*(.+?))*\)~s', $contentView, $matches);
 
-
 if (!empty($matches[0])) {
 foreach ($matches[0] as $key => $value) {
 $args = !empty($matches[2][$key]) ? $matches[2][$key] : [];
@@ -108,6 +108,8 @@ $contentView = preg_replace('~@include\(\''.$matches[1][$key].'\'(?:\s*,\s*(.+?)
 
 }
 }
+
+
 return $contentView;
 }
 
